@@ -9,7 +9,7 @@ public class SoundPlayer : MonoBehaviour
     [SerializeField] GroundEnum.GroundType terrainType = GroundEnum.GroundType.Gravel;
     [SerializeField] SoundPicker soundSelect = null;
 
-    bool moving = false;
+    [HideInInspector]public bool moving = false;
 
     public float walkTimer, sprintTimer, crouchTimer;
 
@@ -30,7 +30,8 @@ public class SoundPlayer : MonoBehaviour
             print("hitting object: " + hit.transform.gameObject.name);
             terrainType = hit.transform.gameObject.GetComponent<GroundEnum>().myGround;
         }
-        playWalkAudio(soundSelect.Walk(terrainType), 0.28f);
+        if(moving)
+            playWalkAudio(soundSelect.Walk(terrainType), 0.28f);
         //if (movementScript.MovementInputVals != Vector2.zero)
         //{
         //    moving = true;

@@ -11,6 +11,7 @@ public class movement : MonoBehaviour
 
     public enum moveForm { baseMove, crouch, sprint}
     public moveForm move = moveForm.baseMove;
+    SoundPlayer sPlayer = null;
 
     public Vector3 movementValues = Vector3.zero;
     public Vector2 MovementInputVals = Vector2.zero;
@@ -35,7 +36,7 @@ public class movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
+        sPlayer = GetComponent<SoundPlayer>();
         cam = Camera.main;
     }
 
@@ -150,6 +151,10 @@ public class movement : MonoBehaviour
 
         //Normalize incoming composite axes and combine into a new Vector2
         Vector2 MovementDirection = (xMoveValues + zMoveValues).normalized;
+        if (MovementDirection != Vector2.zero)
+            sPlayer.moving = true;
+        else
+            sPlayer.moving = false;
         //Assign Movement Values with the x and y axes from Vector2 as x and z for movement vector3
         movementValues = new Vector3(MovementDirection.x, 0, MovementDirection.y);
 
